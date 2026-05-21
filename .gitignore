@@ -1,0 +1,52 @@
+# ========================
+# SECRET & ENVIRONMENT
+# ========================
+.env
+.env.*
+!.env.example
+
+# ========================
+# PYTHON
+# ========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+.conda/
+
+# ========================
+# JUPYTER NOTEBOOK
+# ========================
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ========================
+# DOWNLOADED MEDIA FILES
+# ========================
+*.jpg
+*.jpeg
+*.png
+*.mp3
+*.mp4
+*.wav
+*.pdf
+
+# ========================
+# VS CODE
+# ========================
+.vscode/
+
+# ========================
+# CLAUDE
+# ========================
+.claude
