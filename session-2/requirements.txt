@@ -1,0 +1,10 @@
+langchain
+langchain-community
+langchain-text-splitters
+langchain-google-genai
+langchain-groq
+faiss-cpu
+PyMuPDF
+langgraph
+python-dotenv
+ipykernel
