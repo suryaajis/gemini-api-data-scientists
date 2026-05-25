@@ -7,11 +7,11 @@ Supported by Google.org, AVPN, and the Asian Development Bank (AI Opportunity Fu
 
 ## About This Program
 
-This repository contains all materials, notebooks, and scripts for the **Maju Bareng AI** training program — a 3-session intensive course designed to equip data scientists with practical LLM integration skills using the Gemini API, LangChain, Llama, and Streamlit.
+This repository contains all materials, notebooks, and scripts for the **Maju Bareng AI** training program — a 3-session intensive course designed to equip data scientists with practical LLM integration skills using the Gemini API, LangChain, Llama, and Streamlit. The program culminates in a **Final Project** where participants build a full AI-powered chatbot application.
 
 | | |
 |---|---|
-| **Total Sessions** | 3 |
+| **Total Sessions** | 3 + Final Project |
 | **Platform** | Online — Google Classroom & Google Meet |
 | **Prerequisites** | Python, Machine Learning, NLP basics |
 | **Organizer** | PT. Hacktivate Teknologi Indonesia (Hacktiv8) |
@@ -25,25 +25,40 @@ gemini-api-data-scientists/
 ├── session-1/                        # Intro to AI & Gemini Implementation
 │   ├── gemini_api.py                 # Full Python script
 │   ├── gemini_api.ipynb              # Jupyter Notebook
-│   ├── requirements.txt              # Python dependencies
-│   ├── .env.example                  # API key template
+│   ├── requirements.txt
+│   ├── .env.example
 │   └── docs/
-│       ├── introduction.md           # Session 1 material summary
-│       └── first-preparation.md      # Setup guide
+│       ├── introduction.md
+│       └── first-preparation.md
 ├── session-2/                        # RAG with LangChain & Llama
 │   ├── rag_llama_avpn.py             # Full Python script
 │   ├── rag_llama_avpn.ipynb          # Jupyter Notebook
-│   ├── requirements.txt              # Python dependencies
-│   ├── .env.example                  # API key template
+│   ├── requirements.txt
+│   ├── .env.example
 │   └── docs/
-│       ├── material.md               # Session 2 material summary
-│       └── first-preparation.md      # Setup guide
-├── session-3/                        # Chatbot with LLM + Streamlit + AI Agents
+│       ├── material.md
+│       └── first-preparation.md
+├── session-3/                        # Chatbot with Streamlit + AI Agents
+│   ├── streamlit-chatbot/
+│   │   ├── app.py                    # Streamlit chatbot app
+│   │   ├── streamlit_chatbot.ipynb
+│   │   └── requirements.txt
+│   ├── ai-agents/
+│   │   ├── ai_agents.py              # SQL Agent + BaristaBot CLI
+│   │   ├── ai_agents.ipynb
+│   │   ├── requirements.txt
+│   │   └── .env.example
 │   └── docs/
-│       ├── sesi-3-summary.md         # Session 3 material summary
-│       └── gemini-streamlit-chatbot-summary.md  # Streamlit chatbot reference
-├── gemini-streamlit-chatbot-summary.md  # YouTube tutorial summary
+│       ├── sesi-3-summary.md
+│       └── gemini-streamlit-chatbot-summary.md
+├── final-project/                    # LittleSteps AI — Baby Development Chatbot
+│   ├── app.py                        # Main Streamlit application
+│   ├── run_ngrok.py                  # ngrok tunnel helper for public URL
+│   ├── littlesteps_ai_streamlit.ipynb
+│   ├── requirements.txt
+│   └── .env.example
 ├── .gitignore
+├── CLAUDE.md
 └── README.md
 ```
 
@@ -157,7 +172,7 @@ Get your Groq API key at: https://console.groq.com/
 - AI Agent use cases (Data Agent, Customer Service Agent, Code Agent)
 - Deploying Streamlit apps to the Cloud
 
-### Streamlit
+### Streamlit Chatbot
 
 **Streamlit** is an open-source Python framework for building interactive web apps — specifically for data science and ML — without writing any HTML, CSS, or JavaScript.
 
@@ -168,6 +183,12 @@ Get your Groq API key at: https://console.groq.com/
 | **Chat** | `st.chat_input`, `st.chat_message`, `st.status` |
 | **Charts** | `st.area_chart`, `st.bar_chart`, `st.line_chart` |
 | **Status** | `st.progress`, `st.spinner`, `st.status` |
+
+**Quick Start:**
+```bash
+pip install -r session-3/streamlit-chatbot/requirements.txt
+streamlit run session-3/streamlit-chatbot/app.py
+```
 
 ### AI Agents
 
@@ -181,18 +202,73 @@ AI Agents are software programs that can autonomously interact with their enviro
 | **Capability** | Complex tasks (e.g., analyze last month's expenses) | Information only (e.g., how to check balance) |
 | **Interaction** | **Proactive** — goal-oriented | **Reactive** — responds to requests |
 
-**Use Case Examples:**
+The `session-3/ai-agents/ai_agents.py` script demonstrates two agents built with LangGraph:
+- **SQL Agent** — answers natural-language questions about a SQLite database
+- **BaristaBot** — a stateful coffee-ordering CLI bot with conversation memory (`InMemorySaver`)
 
-| Agent Type | Description |
+**Quick Start (AI Agents):**
+```bash
+pip install -r session-3/ai-agents/requirements.txt
+cp session-3/ai-agents/.env.example session-3/ai-agents/.env
+# Edit .env: GEMINI_API_KEY=your_key_here
+python session-3/ai-agents/ai_agents.py
+# Type 'q' to quit BaristaBot
+```
+
+---
+
+## Final Project — LittleSteps AI
+
+**LittleSteps AI** is a baby growth and development assistant chatbot built as the capstone project for the Maju Bareng AI program. It helps parents track developmental milestones and get evidence-based parenting guidance powered by Gemini AI.
+
+### Features
+
+- **Baby Profile Setup** — enter name, age (months), gender, weight, and height in the sidebar
+- **Milestone Tracker** — built-in milestone reference data covering 0–36 months across motor, cognitive, and social-emotional domains
+- **Conversational AI** — Gemini 2.5 Flash chat session with a personalized system prompt tailored to each baby's profile
+- **Quick Prompts** — one-click preset questions for common parenting topics (MPASI, sleep tips, brain stimulation, etc.)
+- **Medical Disclaimer** — always reminds users to consult a pediatrician for health concerns
+- **ngrok Integration** — `run_ngrok.py` exposes the local Streamlit app via a public tunnel for sharing/demo
+
+### Tech Stack
+
+| Component | Technology |
 |---|---|
-| **Data Agent** | Analyzes data to answer business questions (sales, customers, trends) |
-| **Customer Service Agent** | Resolves customer complaints and takes direct action |
-| **Code Agent** | Helps developers write cleaner code and fix bugs |
+| **UI Framework** | Streamlit |
+| **LLM** | Gemini 2.5 Flash (`google-genai` SDK) |
+| **Tunnel** | pyngrok |
+| **Config** | python-dotenv |
 
-**Hands-On:**
-- Build a chatbot UI with Streamlit + LLM integration
-- Implement an AI Agent with function calling
-- Deploy the Streamlit app to Streamlit Cloud
+### Architecture
+
+```
+Sidebar (Baby Profile)
+      ↓ save profile
+LittleStepsBot (google.genai.Client)
+      ↓ personalized system_instruction
+Gemini 2.5 Flash Chat Session
+      ↓
+Chat UI (st.chat_message) + Milestone Expander
+```
+
+The `LittleStepsBot` class wraps `genai.Client` and `client.chats.create()`. A new chat session is created (or reset) whenever the baby profile is updated, ensuring the system prompt always reflects the latest profile data.
+
+### Quick Start
+
+```bash
+# 1. Install dependencies
+pip install -r final-project/requirements.txt
+
+# 2. Set up API key
+cp final-project/.env.example final-project/.env
+# Edit .env: GEMINI_API_KEY=your_key_here
+
+# 3. Run locally
+streamlit run final-project/app.py
+
+# 4. (Optional) Expose via ngrok for public access
+python final-project/run_ngrok.py
+```
 
 ---
 
@@ -203,7 +279,7 @@ AI Agents are software programs that can autonomously interact with their enviro
 - Miniconda (recommended) or any Python virtual environment
 - VS Code with **Python** and **Jupyter** extensions
 - A Google account for Gemini API key
-- A Groq account for Llama API key
+- A Groq account for Llama API key (Session 2 only)
 
 ### 2. Get API Keys
 
@@ -211,7 +287,7 @@ AI Agents are software programs that can autonomously interact with their enviro
 1. Go to [Google AI Studio](https://aistudio.google.com/)
 2. Click **Get API Key** → **Create API Key**
 
-**Groq API Key (for Llama):**
+**Groq API Key (for Llama — Session 2 only):**
 1. Go to [Groq Console](https://console.groq.com/)
 2. Navigate to **API Keys** → **Create API Key**
 
@@ -222,18 +298,24 @@ conda create -n gemini-api python=3.11 -y
 conda activate gemini-api
 
 # Install for a specific session
-pip install -r session-1/requirements.txt  # or session-2/
+pip install -r session-1/requirements.txt   # session 1
+pip install -r session-2/requirements.txt   # session 2
+pip install -r session-3/streamlit-chatbot/requirements.txt  # session 3 chatbot
+pip install -r session-3/ai-agents/requirements.txt          # session 3 agents
+pip install -r final-project/requirements.txt                # final project
 ```
 
 ### 4. API Key Configuration
-Each session has a `.env.example`. Copy and fill it:
+
+Each session and the final project have a `.env.example`. Copy and fill it:
 ```bash
 cp session-1/.env.example session-1/.env
+cp final-project/.env.example final-project/.env
 ```
-Then edit `.env`:
+Then edit the `.env` file:
 ```
 GEMINI_API_KEY=your_gemini_key_here
-GROQ_API_KEY=your_groq_key_here
+GROQ_API_KEY=your_groq_key_here   # session 2 only
 ```
 
 > **Never commit your `.env` file** — it's already in `.gitignore`.
@@ -255,18 +337,6 @@ GROQ_API_KEY=your_groq_key_here
 |---|---|---|---|---|
 | **Tier 1** | 2/3 | 2/2 | 3/3 | Required |
 | **Tier 2** | 2/3 | 2/2 | 3/3 | Not required |
-
----
-
-## Final Project
-
-Build an AI-powered chatbot with a use case and parameter configuration of your choice. The chatbot must use an NLP/LLM model to process natural language and provide relevant responses.
-
-**Example use cases:** customer service bot, education bot, travel assistant, personal productivity assistant
-
-**Deliverables:**
-- GitHub repository URL
-- Screenshots of the User Interface
 
 ---
 
